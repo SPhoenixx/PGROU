@@ -181,6 +181,8 @@ void BlobList::SetBlobs(const char *name)
 	int num;
 	in >> num;
 
+	std::cout << "nombre de marqueurs préchargés :" << num << std::endl;
+
 	CheckLength(num);
 
 	for(int i=0;i<num;i++){
@@ -199,8 +201,23 @@ void BlobList::SetBlobs(const char *name)
 	in.close();
 }
 
-void BlobList::SetBlobs(std::vector<CvPoint>)
+void BlobList::SetBlobs(std::vector<CvPoint> Intersections)
 {
+
+	CheckLength(Intersections.size());
+	std::cout << "entrée dans Setblobs custom" << std::endl;
+	for(int i=0;i<Intersections.size();i++) {
+		//std::cout << "Inter X" << Intersections[i].x << std::endl;
+		m_blobs[i].x = Intersections[i].x;
+		m_blobs[i].y = Intersections[i].y;
+		//std::cout << "Inter Y" << Intersections[i].y << std::endl;
+		m_blobs[i].idxy.x = 0;
+		m_blobs[i].idxy.y = 0;
+		//std::cout << m_blobs[i].x << "/" << m_blobs[i].y << std::endl;
+		m_extracted.push_back(&m_blobs[i]);
+	}
+	std::cout << "sortie dans Setblobs custom" << std::endl;
+
 	/*
 	std::ifstream in(name);
 	

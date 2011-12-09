@@ -31,6 +31,7 @@ void PaperList::Delete(const int paperid)
 
 unsigned PaperList::Add(eblobs *blobs)
 {
+	std::cout << "entrée dans PaperList" << std::endl;
 	static unsigned numpaper = 0;
 	numpaper++;
 
@@ -42,25 +43,29 @@ unsigned PaperList::Add(eblobs *blobs)
 	tmp.b = static_cast<double>(rand())/(static_cast<double>(RAND_MAX)+0.1);
 
 	int num=0;
-
 	for(eblobs::iterator iteb=blobs->begin();iteb!=blobs->end();++iteb){
-
+		std::cout << "test" << std::endl;
 		(*iteb)->SetID(tmp.id, num);
-
+		std::cout << "test1" << std::endl;
 		pt p;
+		std::cout << "testi" << std::endl;
 		p.id = (*iteb)->id;
+		//std::cout << "test :" << (*iteb)->descs << std::endl;
 		p.descs = (*iteb)->descs;
+		std::cout << "testixy" << std::endl;
 		p.rawx = (*iteb)->rawx;
+		std::cout << "test2" << std::endl;
 		p.rawy = (*iteb)->rawy;
 		p.x = (*iteb)->x;
 		p.y = (*iteb)->y;
-
+		std::cout << "test3" << std::endl;
 		tmp.pts.push_back(p);
 
 		++num;
 	}
 
 	m_papers.insert(std::pair<unsigned, Paper>(numpaper, tmp));
+	std::cout << "sortie dans PaperList" << std::endl;
 
 	return numpaper;	
 }

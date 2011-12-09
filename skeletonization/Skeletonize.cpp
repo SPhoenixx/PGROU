@@ -178,6 +178,8 @@ void Skeletonize::processImage1(IplImage *graySrcImg)
    
    // Computing Intersections
    vector<CvPoint> crossroads = Intersections(graySrcImg)();
+   intersect = crossroads;
+
 
    /*
    for (unsigned int i = 0; i < crossroads.size(); ++i)

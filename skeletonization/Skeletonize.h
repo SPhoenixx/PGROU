@@ -19,6 +19,8 @@ public:
    virtual void processImage1(IplImage *graySrcImg);
    IplImage *getSkeleImage();
 
+   std::vector<CvPoint> intersect;
+
    
 protected:
    IplImage *m_src;

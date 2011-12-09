@@ -41,7 +41,6 @@ void LLAH::AddPaper(const char *name)
 			m_table.ComputeID(*itbl);
 		}
 	}
-
 	unsigned paperid = m_paperlist.Add(blobs);
 	Paper* paper = m_paperlist.FindPaper(paperid);
 
@@ -50,8 +49,9 @@ void LLAH::AddPaper(const char *name)
 
 void LLAH::AddPaper(std::vector<CvPoint> Intersections)
 {
+	std::cout << "entrée dans AddPaper custom" << std::endl;
 	m_bloblist.SetBlobs(Intersections);
-
+	std::cout << "Etape1" << std::endl;
 	eblobs *blobs = m_bloblist.GetExtracted();
 
 	if(static_cast<int>(blobs->size()) > m_param.n){
@@ -68,11 +68,13 @@ void LLAH::AddPaper(std::vector<CvPoint> Intersections)
 			m_table.ComputeID(*itbl);
 		}
 	}
-
+	std::cout << "Etape2" << std::endl;
 	unsigned paperid = m_paperlist.Add(blobs);
+	std::cout << "Etape3" << std::endl;
 	Paper* paper = m_paperlist.FindPaper(paperid);
-
+	std::cout << "Etape4" << std::endl;
 	SetHash(paper, blobs);
+	std::cout << "sortie dans AddPaper custom" << std::endl;
 }
 
 

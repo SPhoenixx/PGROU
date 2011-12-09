@@ -56,13 +56,28 @@ void imgProcChiang::processImage(IplImage *colorSrcImg, int threshold) {
    // seuillage rapide : parcours de l'ensemble des pixels et validation par la table
    uchar *redPointer = (uchar*) colorSrcImg->imageData;
    uchar *greyPointer = (uchar*) graySrcImg->imageData;
+	uchar rr = 0;
+	uchar gg = 0;
+	uchar bb = 0;
    for (int y=0 ; y<colorSrcImg->height ; y++) {
       for (int x=0 ; x<colorSrcImg->width ; x++) {
-         int rr = (int) *redPointer++;
-         int gg = (int) *redPointer++;
-         int bb = (int) *redPointer++;
-         //cout << "P(" << x << "," << y << ")=" << rr << "," << gg << "," << bb << ")" << endl;
-         if (thresTable[rr][gg][bb]) {
+         rr = (uchar) *redPointer++;
+		
+		 uchar test = (uchar) *redPointer;
+		 int test1 = (int) *redPointer;
+		 uchar* ptr = cvPtr2D(colorSrcImg, y, x, NULL);
+		 //cout << "redPt" << (int) *ptr << "/" << (int) *ptr++ << (int) *ptr++ << endl;
+         
+		 gg = (uchar) *redPointer++;
+         bb = (uchar) *redPointer++;
+
+		 //BGR order!!!!!!!!!!!!!!!!!!in IplImage!!
+		 if ((rr==105||rr==99||rr==92)&&(bb==105||bb==99||bb==92)&&(gg==105||gg==99||gg==92)) {
+			cout << "P(" << x << "," << y << ")=" << (int)bb << "," << (int)gg << "," << (int)rr << ")" << endl;
+			//cvWaitKey(0);
+		 }
+
+         if (thresTable[bb][gg][rr]) {
             //cout << "+ajout de (" << rr << "," << gg << "," << bb << ")" << endl;
             *greyPointer++ = 255;
          }
@@ -73,7 +88,8 @@ void imgProcChiang::processImage(IplImage *colorSrcImg, int threshold) {
       //*redPointer += colorSrcImg->width;
    }
    // on montre le résultat
-   //cvShowImage("Color", colorSrcImg);
+	cvShowImage("Color", colorSrcImg);
+   cvShowImage("Clusterized", graySrcImg);
 
    Skeletonize::processImage1(graySrcImg);
 

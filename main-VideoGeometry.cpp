@@ -149,7 +149,8 @@ int main(int argc, char **argv)
    int threshold = 230;
    arguments.read("--thres",threshold);
    // do we want to use a movie?
-   movieName="a tester.avi";
+   //movieName="";
+   movieName="video 1-B.avi";
    arguments.read("--video", movieName);
    if(!movieName.empty())
       cout<<"Movie name: "<<movieName<<endl;
@@ -309,25 +310,31 @@ int main(int argc, char **argv)
 	cout << "hello2" << endl;
 	// load markers
 	char name[256];
-	int nummarker = 0;
-
+	int nummarker = 1;
+	/*
 	for(int i=0;i<nummarker;i++) {
 		//sprintf_s(name,sizeof(name),"./data/%d.txt",i);
 		sprintf(name,"data/%d.txt",i);
 		m_llah.AddPaper(name);
 		std::cout << name << " loaded" << std::endl;
 	}
-
+	*/
 	cvShowImage("Uchiyamarkers", m_camimg.getImg());
 
-	//-------------------------------------------------------------------------------06/12/12
+	m_llah.AddPaper("data/intersect.dat");//on charge les marqueurs qui vont bien
 
-  
+	//-------------------------------------------------------------------------------06/12/12
+	int i=0;
 	while (!viewer.done()) {
 		update(viewer.elapsedTime());
 		videoGeode->updateVideoTexture();
+		if (i==0) {
+			cvSaveImage("test.bmp", videoGeode->getCamImage());
+			i=1;
+		}
 
 		//Il faut faire les traitements uchiyamarkers ici---------------------------------
+		//m_llah.AddPaper(videoGeode->getSkelImage()->intersect);
 		m_llah.SetPts();
 		m_llah.CoordinateTransform(static_cast<double>(m_cam.h));
 
@@ -351,8 +358,8 @@ int main(int argc, char **argv)
 		cvShowImage("Uchiyamarkers", m_camimg.getImg());
 		//--------------------------------------------------------------------------------
      
-        //m2 = viewer.getCamera()->getInverseViewMatrix();
-        //std::cout << "Camera inverse view matrix: " << m2 << std::endl;
+      //m2 = viewer.getCamera()->getInverseViewMatrix();
+      //std::cout << "Camera inverse view matrix: " << m2 << std::endl;
 		viewer.frame();
 		cvWaitKey(0);
    }
